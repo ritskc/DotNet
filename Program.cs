@@ -1,10 +1,14 @@
-﻿namespace DotNet
+﻿using DotNet.Linq;
+
+namespace DotNet
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            LinqClient.Get();
+            Console.Write("Hello World!");           
         }
-    }
+
+  }
 }
