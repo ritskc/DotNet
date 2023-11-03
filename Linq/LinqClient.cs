@@ -47,6 +47,16 @@ namespace DotNet.Linq
             Console.WriteLine($"Multiple of the numbers is {numbers.Aggregate((number1, number2) => number1 * number2)}");
 
             Console.WriteLine($"Multiple of the numbers * 10 is {numbers.Aggregate(10, (number1, number2) => number1 * number2)}");
+
+            Func<int, bool> predicate = x=> x % 2 == 0;
+            var evenNumbers = numbers.Where(predicate);
+
+            evenNumbers = numbers.Where(x => IsEven(x));
+        }
+
+        public static bool IsEven(int number)
+        {
+            return number % 2 == 0;
         }
     }
 }
