@@ -10,17 +10,38 @@ namespace DotNet.Linq
     {
         public static void Get()
         {
-            var filteredStudents = from students in Student.GetAllStudents()
+            /*var filteredStudents = from students in Student.GetAllStudents()
                                    where students.Gender == "Male"
-                                   select students;
+                                   select students;*/
 
-            //var filteredStudents = Student.GetAllStudents().Where(x => x.Gender == "Female");
+            var filteredStudents = Student.GetAllStudents().Where(x => x.Gender == "Female").Select(x=>x.Id);
 
 
             foreach (var student in filteredStudents)
             {
-                Console.WriteLine(student.Name);
+                Console.WriteLine(student);
             }
+
+            var filteredStudents1 = Student.GetAllStudents().Select(x => new { x.Name, x.Marks });
+            foreach (var student in filteredStudents1)
+            {
+                Console.WriteLine($"{student.Name} has acheived {student.Marks}");
+            }
+
+            var filteredStudents2 = Student.GetAllStudents().Select(x => new {StudentName= x.Name, AchievedMarks= x.Marks });
+            foreach (var student in filteredStudents2)
+            {
+                Console.WriteLine($"{student.StudentName} has acheived {student.AchievedMarks}");
+            }
+
+            var filteredStudents3 = Student.GetAllStudents().Select(x => new { StudentName = x.Name + " " + x.Gender, AchievedMarks = x.Marks });
+            foreach (var student in filteredStudents3)
+            {
+                Console.WriteLine($"{student.StudentName} has acheived {student.AchievedMarks}");
+            }
+
+            Student.GetAllStudents().Where(x => x.Gender == "Male").Select(emp => new { emp.Name, emp.Gender, emp.Marks });
+
         }
 
         public static void GetNumber()
