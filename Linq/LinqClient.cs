@@ -137,6 +137,44 @@ namespace DotNet.Linq
         {
             return number % 2 == 0;
         }
+
+        public static void GetGroup()
+        {
+            var students = Student.GetAllStudents().OrderBy(s=>s.Name);
+            var departments = Student.GetAllDepartments().OrderBy(d=>d.Name);
+
+            var groupJoin = departments.GroupJoin(Student.GetAllStudents(), d => d.Id, s => s.DepartmentId,
+                (department, student) => new { department, student });
+
+            
+            Console.WriteLine("Group join");
+
+            foreach (var item in groupJoin)
+            {
+                Console.WriteLine("-----------------------");
+                Console.WriteLine($"Students in Department {item.department.Name}");
+                foreach (var student in item.student)
+                {
+                    Console.WriteLine($"\t Student name: {student.Name} \t {student.Gender} ");
+                }
+
+                Console.WriteLine();
+            }
+
+            var innerJoin = students.Join(departments, e => e.DepartmentId, d => d.Id,
+                (st, dt) => new {st,dt});
+
+            Console.WriteLine("Inner join");
+            foreach (var item in innerJoin)
+            {
+                Console.WriteLine("-----------------------");
+                Console.WriteLine($"Students in Department {item.dt.Name}");
+                Console.WriteLine($"\t Student name: {item.st.Name} \t {item.st.Gender} ");
+
+                Console.WriteLine();
+            }
+
+        }
     }
 }
 

@@ -6,7 +6,7 @@ namespace DotNet
     {
         static void Main(string[] args)
         {
-            LinqClient.Get();            
+            LinqClient.GetGroup();            
 
             Console.Write("Hello World!");           
         }
