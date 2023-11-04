@@ -42,6 +42,64 @@ namespace DotNet.Linq
 
             Student.GetAllStudents().Where(x => x.Gender == "Male").Select(emp => new { emp.Name, emp.Gender, emp.Marks });
 
+            var subjects = Student.GetAllStudents().SelectMany(x => x.Subjects).Distinct();
+
+            foreach(var subject in subjects)
+            {
+                Console.WriteLine(subject);
+            }
+
+            var result = Student.GetAllStudents().SelectMany(x => x.Subjects, (student, subject) => new { student.Name, subject });
+
+            foreach (var rs in result)
+            {
+                Console.WriteLine($"{rs.Name} - {rs.subject}");
+            }
+
+            Console.WriteLine("Students");
+            var sts= Student.GetAllStudents().Where(x=>x.Gender=="Female").Select(sts => new { sts.Name, sts.Gender });
+
+            foreach (var item in sts)
+            {
+                Console.WriteLine($"{item.Name} is {item.Gender}");
+            }
+
+            Func<List<string>, string> GetSubjectsFunc = GetSubjects;
+
+            var sts1 = Student.GetAllStudents().Where(x => x.Gender == "Female").Select(sts => new { sts.Name, sts.Gender,  sub = GetSubjects(sts.Subjects)  });
+
+            foreach (var item in sts1)
+            {
+                Console.WriteLine($"{item.Name} is {item.Gender} and enrolled in {item.sub} subjects");
+            }
+
+            var studentmarks = Student.GetAllStudents().Select(s => new 
+            { 
+                s.Name,
+                examMarks = GetExamMarks(s.ExamResults)
+            });
+
+            Console.WriteLine("Here is the result");
+
+            foreach (var item in studentmarks)
+            {
+                Console.WriteLine($"{item.Name} has obtained {item.examMarks}");
+            }
+        }
+
+        public static string GetSubjects(List<string> marks)
+        {
+            return marks.Aggregate((a, b) => a + " , " + b);
+        }
+
+        public static string GetExamMarks(List<ExamResult> result)
+        {
+            var examresult = string.Empty;
+            result.ForEach(r =>
+            {
+                examresult = examresult + Environment.NewLine +  r.Subject + " : " + r.mark;
+            });
+            return examresult;
         }
 
         public static void GetNumber()
