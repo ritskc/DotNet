@@ -144,7 +144,9 @@ namespace DotNet.Linq
             var departments = Student.GetAllDepartments().OrderBy(d=>d.Name);
 
             var groupJoin = departments.GroupJoin(Student.GetAllStudents(), d => d.Id, s => s.DepartmentId,
-                (department, student) => new { department, student });
+                (department, student) => new { department, student })
+                .OrderBy(g => g.department.Name);
+                
 
             
             Console.WriteLine("Group join");
@@ -153,7 +155,7 @@ namespace DotNet.Linq
             {
                 Console.WriteLine("-----------------------");
                 Console.WriteLine($"Students in Department {item.department.Name}");
-                foreach (var student in item.student)
+                foreach (var student in item.student.OrderBy(s=>s.Name))
                 {
                     Console.WriteLine($"\t Student name: {student.Name} \t {student.Gender} ");
                 }
