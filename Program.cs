@@ -1,4 +1,5 @@
 ﻿using DotNet.Linq;
+using DotNet.RegEx;
 
 namespace DotNet
 {
@@ -6,9 +7,10 @@ namespace DotNet
     {
         static void Main(string[] args)
         {
-            LinqClient.GetGroup();            
+            RegExBuilder.Get();
+            //LinqClient.GetGroup();            
 
-            Console.Write("Hello World!");           
+            //Console.Write("Hello World!");           
         }
 
   }
