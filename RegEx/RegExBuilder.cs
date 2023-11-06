@@ -16,7 +16,7 @@ namespace DotNet.RegEx
             {
                 Console.WriteLine("Please input a value");
                 var input = Console.ReadLine();
-                GetStringCollectionOperate(input);
+                ReplaceString(input);
             }
         }
 
@@ -85,6 +85,16 @@ namespace DotNet.RegEx
             }
 
             Console.WriteLine($"New output is: {output}");
+        }
+
+        
+        public static void ReplaceString(string input)
+        {
+            string pattern = "(Mr\\.?+ |Mrs\\.? |Miss |Ms\\.? )";
+
+            string output = Regex.Replace(input, pattern,string.Empty);
+            Console.WriteLine($"New output is: {output}");
+            
         }
     }
 }
