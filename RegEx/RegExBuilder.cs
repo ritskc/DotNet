@@ -16,7 +16,7 @@ namespace DotNet.RegEx
             {
                 Console.WriteLine("Please input a value");
                 var input = Console.ReadLine();
-                ReplaceString(input);
+                DomainValidation(input);
             }
         }
 
@@ -95,6 +95,31 @@ namespace DotNet.RegEx
             string output = Regex.Replace(input, pattern,string.Empty);
             Console.WriteLine($"New output is: {output}");
             
+        }
+
+        public static void DateValidation(string input)
+        {
+            string pattern = @"[0-9]{2}/[0-9]{2}/[0-9]{4}";
+
+            var match = Regex.IsMatch(input, pattern);
+            if (match)
+                Console.WriteLine($"{input} is in dd/mm/yyyy format");
+            else
+                Console.WriteLine($"{input} is not in dd/mm/yyyy format");
+
+        }
+
+        public static void DomainValidation(string input)
+        {
+            //string pattern = @"^www.[a-zA-Z0-9]{1,25}.com$";
+            string pattern = @"^(www.)?([\w][\w\-]+)[.]{1}([\w][\w\-]+)$";
+
+            var match = Regex.IsMatch(input, pattern);
+            if (match)
+                Console.WriteLine($"{input} is in correct format");
+            else
+                Console.WriteLine($"{input} is not in correct format");
+
         }
     }
 }
